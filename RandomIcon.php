@@ -13,8 +13,8 @@ class DefaultController
 {
 	public function run()
 	{
-		$ig = new \Xmontero\EpigraphInvalidation\IconGenerator( "abcd", 72 );
-		$ig->output();
+		$ig = new \Xmontero\EpigraphInvalidation\IconGenerator( "abcd" );
+		$ig->output( 72 );
 	}
 }
 
