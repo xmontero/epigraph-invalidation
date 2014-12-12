@@ -1,6 +1,8 @@
 <?php
 namespace Xmontero\EpigraphInvalidation;
 
+require_once( "IconModel.php" );
+
 class IconGenerator
 {
 	private $originalSquareSizeInPixels = 1024;
@@ -19,6 +21,8 @@ class IconGenerator
 	private $marginWidthInPixels;
 	private $dotWidthInPixels;
 	private $image;
+	
+	private $colorLayerDown;
 	
 	public function __construct( $seed )
 	{
@@ -62,22 +66,47 @@ class IconGenerator
 		$white = imagecolorallocate( $image, 255, 255, 255 );
 		imagefill( $image, 0, 0, $white );
 		
-		$color = imagecolorallocate( $image, 233, 14, 91 );
+		$icon = new IconModel();
+		
+		$this->colorLayerDown = imagecolorallocate( $image, 233, 14, 91 );
 		//imagefilledellipse( $image, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $red );
 		
 		for( $row = 0; $row < $this->dotCount; $row++ )
 		{
 			for( $column = 0; $column < $this->dotCount; $column++ )
 			{
-				$x1 = $column * $this->dotWidthInPixels + $this->marginWidthInPixels;
-				$y1 = $row * $this->dotWidthInPixels + $this->marginWidthInPixels;
-				$x2 = $x1 + $this->dotWidthInPixels;
-				$y2 = $y1 + $this->dotWidthInPixels;
-				imagefilledrectangle( $image, $x1, $y1, $x2, $y2, $color );
+				$offsetX = $column * $this->dotWidthInPixels + $this->marginWidthInPixels;
+				$offsetY = $row * $this->dotWidthInPixels + $this->marginWidthInPixels;
+				$this->paintLayerDownDot( $icon->getLayerDownDot( $column, $row ), $image, $offsetX, $offsetY );
 			}
 		}
 		
 		$this->image = $image;
+	}
+	
+	private function paintLayerDownDot( Layer1Dot $dot, $image, $offsetX, $offsetY )
+	{
+		for( $y = 0; $y < 3; $y++ )
+		{
+			for( $x = 0; $x < 3; $x++ )
+			{
+				$fill = ( $x == 0 && $y == 0 ) || ( $x == 1 && $y == 1 );
+				$this->paintLayerDownDotRegion( $image, $x, $y, $offsetX, $offsetY, false, $fill );
+			}
+		}
+	}
+	
+	private function paintLayerDownDotRegion( $image, $x, $y, $offsetX, $offsetY, $back, $fill )
+	{
+		$x1 = $offsetX + $x * $this->columnWidthInPixels;
+		$y1 = $offsetY + $y * $this->columnWidthInPixels;
+		$x2 = $x1 + $this->columnWidthInPixels;
+		$y2 = $y1 + $this->columnWidthInPixels;
+		
+		if( $fill )
+		{
+			imagefilledrectangle( $image, $x1, $y1, $x2, $y2, $this->colorLayerDown );
+		}
 	}
 }
 
