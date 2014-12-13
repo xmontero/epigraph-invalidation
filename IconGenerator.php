@@ -22,6 +22,7 @@ class IconGenerator
 	private $dotWidthInPixels;
 	private $image;
 	
+	private $colorBackground;
 	private $colorLayerDown;
 	
 	public function __construct( $seed )
@@ -63,51 +64,81 @@ class IconGenerator
 	private function createIcon()
 	{
 		$image = imagecreatetruecolor( $this->originalSquareSizeInPixels, $this->originalSquareSizeInPixels );
-		$white = imagecolorallocate( $image, 255, 255, 255 );
-		imagefill( $image, 0, 0, $white );
+		$this->colorBackground = imagecolorallocate( $image, 255, 255, 255 );
+		imagefill( $image, 0, 0, $this->colorBackground );
 		
 		$icon = new IconModel();
 		
 		$this->colorLayerDown = imagecolorallocate( $image, 233, 14, 91 );
 		//imagefilledellipse( $image, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $red );
 		
+		$layerDown = $icon->getLayerDown();
 		for( $row = 0; $row < $this->dotCount; $row++ )
 		{
 			for( $column = 0; $column < $this->dotCount; $column++ )
 			{
 				$offsetX = $column * $this->dotWidthInPixels + $this->marginWidthInPixels;
 				$offsetY = $row * $this->dotWidthInPixels + $this->marginWidthInPixels;
-				$this->paintLayerDownDot( $icon->getLayerDownDot( $column, $row ), $image, $offsetX, $offsetY );
+				
+				$dot = $layerDown->getDot( $column, $row );
+				$topLeft = $layerDown->getVertex( $column, $row );
+				$topRight = $layerDown->getVertex( $column + 1, $row );
+				$bottomLeft = $layerDown->getVertex( $column, $row + 1 );
+				$bottomRight = $layerDown->getVertex( $column + 1, $row + 1 );
+				
+				$this->paintLayerDownDot( $dot, $topLeft, $topRight, $bottomLeft, $bottomRight, $image, $offsetX, $offsetY );
 			}
 		}
 		
 		$this->image = $image;
 	}
 	
-	private function paintLayerDownDot( Layer1Dot $dot, $image, $offsetX, $offsetY )
+	private function paintLayerDownDot( $dot, $topLeft, $topRight, $bottomLeft, $bottomRight, $image, $offsetX, $offsetY )
 	{
-		for( $y = 0; $y < 3; $y++ )
-		{
-			for( $x = 0; $x < 3; $x++ )
-			{
-				$fill = ( $x == 0 && $y == 0 ) || ( $x == 1 && $y == 1 );
-				$this->paintLayerDownDotRegion( $image, $x, $y, $offsetX, $offsetY, false, $fill );
-			}
-		}
+		$w = $this->columnWidthInPixels;
+		
+		$x1 = $offsetX;
+		$y1 = $offsetY;
+		$x2 = $x1 + $w * 3;
+		$y2 = $y1 + $w * 3;
+		
+		$color = $dot ? $this->colorLayerDown : $this->colorBackground;
+		imagefilledrectangle( $image, $x1, $y1, $x2, $y2, $color );
+		
+		$this->paintLayerDownVertex( $topLeft, $dot, $offsetX, $offsetY, true, true, $image );
+		$this->paintLayerDownVertex( $topRight, $dot, $offsetX, $offsetY, true, false, $image );
+		$this->paintLayerDownVertex( $bottomLeft, $dot, $offsetX, $offsetY, false, true, $image );
+		$this->paintLayerDownVertex( $bottomRight, $dot, $offsetX, $offsetY, false, false, $image );
 	}
 	
-	private function paintLayerDownDotRegion( $image, $x, $y, $offsetX, $offsetY, $back, $fill )
+	private function paintLayerDownVertex( $vertex, $dot, $offsetX, $offsetY, $top, $left, $image )
 	{
-		$x1 = $offsetX + $x * $this->columnWidthInPixels;
-		$y1 = $offsetY + $y * $this->columnWidthInPixels;
-		$x2 = $x1 + $this->columnWidthInPixels;
-		$y2 = $y1 + $this->columnWidthInPixels;
+		$w = $this->columnWidthInPixels;
+		$w2 = $w * 2;
 		
-		if( $fill )
+		$rectangleX = $offsetX + ( $left ? 0 : ( $w * 2 ) );
+		$rectangleY = $offsetY + ( $top ? 0 : ( $w * 2 ) );
+		
+		$arcCenterX = $offsetX + $w + ( $left ? 0 : $w );
+		$arcCenterY = $offsetY + $w + ( $top ? 0 : $w );
+		
+		if( $top )
 		{
-			imagefilledrectangle( $image, $x1, $y1, $x2, $y2, $this->colorLayerDown );
+			$arcStartAngle = $left ? 180 : 270;
 		}
+		else
+		{
+			$arcStartAngle = $left ? 90 : 0;
+		}
+		$arcStopAngle = $arcStartAngle + 90;
+		
+		$bgColor = $this->colorBackground;
+		$fgColor = $this->colorLayerDown;
+		
+		$dotColor = $dot ? $fgColor : $bgColor;
+		$vertexColor = $vertex ? $fgColor : $bgColor;
+		
+		imagefilledrectangle( $image, $rectangleX, $rectangleY, $rectangleX + $w, $rectangleY + $w, $vertexColor );
+		imagefilledarc( $image, $arcCenterX, $arcCenterY, $w2, $w2, $arcStartAngle, $arcStopAngle, $dotColor, IMG_ARC_PIE );
 	}
 }
-
-// jolín, están diciendo en la tele, que google va a cerrar el servicio "google news"
