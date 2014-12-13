@@ -6,7 +6,7 @@ error_reporting( E_ALL );
 ini_set( 'display_errors', 'On' );
 
 // Include the icon generator class.
-require_once( "IconGenerator.php" );
+require_once( "../src/IconGenerator.php" );
 
 // Controller class.
 class DefaultController
@@ -14,7 +14,7 @@ class DefaultController
 	public function run()
 	{
 		$ig = new \Xmontero\EpigraphInvalidation\IconGenerator( "abcd" );
-		$ig->output( 72 );
+		$ig->output( 512 );
 	}
 }
 
