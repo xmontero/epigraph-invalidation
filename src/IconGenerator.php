@@ -1,7 +1,7 @@
 <?php
 namespace Xmontero\EpigraphInvalidation;
 
-require_once( "IconModel.php" );
+require_once( "Icon.php" );
 
 class IconGenerator
 {
@@ -67,7 +67,7 @@ class IconGenerator
 		$this->colorBackground = imagecolorallocate( $image, 255, 255, 255 );
 		imagefill( $image, 0, 0, $this->colorBackground );
 		
-		$icon = new IconModel();
+		$icon = new Icon();
 		
 		$this->colorLayerDown = imagecolorallocate( $image, 233, 14, 91 );
 		//imagefilledellipse( $image, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $red );
