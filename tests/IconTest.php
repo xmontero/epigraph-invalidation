@@ -5,12 +5,23 @@ class IconTest extends PHPUnit_Framework_TestCase
 	
 	public function setUp()
 	{
-		$this->sut = new Xmontero\EpigraphInvalidation\IconModel;
+		$this->sut = new Xmontero\EpigraphInvalidation\Icon;
 	}
 	
 	public function testSize()
 	{
-		$this->assertEquals( 4, $this->sut->getSize() );
+		$defaultSize = 4;
+		$customConstructorSize = 7;
+		$customSetterSize = 9;
+		
+		$sut = $this->sut;
+		$this->assertEquals( $defaultSize, $sut->getSize() );
+		
+		$sut = new Xmontero\EpigraphInvalidation\Icon( $customConstructorSize );
+		$this->assertEquals( $customConstructorSize, $sut->getSize() );
+		
+		$sut->setSize( $customSetterSize );
+		$this->assertEquals( $customSetterSize, $sut->getSize() );
 	}
 	
 	public function tearDown()

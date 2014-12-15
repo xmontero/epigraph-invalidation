@@ -1,24 +1,6 @@
 <?php
 namespace Xmontero\EpigraphInvalidation;
 
-class IconModel
-{
-	public function getSize()
-	{
-		return 4;
-	}
-	
-	public function getLayerDown()
-	{
-		return new LayerDown;
-	}
-	
-	public function getLayerUpDot( $x, $y )
-	{
-		//
-	}
-}
-
 class LayerDown
 {
 	private $dots =
