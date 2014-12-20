@@ -28,12 +28,21 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $height + 1, $sut->getVertexHeight() );
 	}
 	
-	public function testSetGetDot()
+	public function testSetGetFaceOnDot()
 	{
-		$this->sut->setDot( true, 3, 3 );
-		$this->sut->setDot( false, 4, 1 );
+		$this->sut->getDot( 2, 2 )->setFilled( true );
+		$this->sut->getDot( 3, 0 )->setFilled( false );
+		$this->sut->getDot( 0, 2 )->setFilled( true );
+		$this->sut->getDot( 1, 3 )->setFilled( false );
 		
-		$this->assertEquals( true, $this->sut->getDot( 3, 3 ) );
-		$this->assertEquals( false, $this->sut->getDot( 4, 1 ) );
+		$this->assertEquals( true, $this->sut->getDot( 2, 2 )->isFilled() );
+		//$this->assertEquals( false, $this->sut->getDot( 3, 0 )->isFilled() );
+		//$this->assertNotEquals( $this->sut->getDot( 0, 2 )->isFilled(), $this->sut->getDot( 1, 3 )->isFilled() );
+	}
+	
+	public function testGetDotReturnsProperType()
+	{
+		$dot = $this->sut->getDot( 0, 2 );
+		$this->assertInstanceOf( 'Xmontero\EpigraphInvalidation\LayerDownDot', $dot );
 	}
 }

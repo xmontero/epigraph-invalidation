@@ -16,15 +16,27 @@ class LayerDownDotTest extends PHPUnit_Framework_TestCase
 		unset( $this->sut );
 	}
 	
-	public function testFace()
+	public function testDefaultFilled()
 	{
-		$this->assertTrue( $this->sut->getFilled() );
+		$this->assertFalse( $this->sut->isFilled() );
+	}
+		
+	public function testSetFilled()
+	{
+		$this->sut->setFilled( true );
+		$this->assertTrue( $this->sut->isFilled() );
 		
 		$this->sut->setFilled( false );
-		$this->assertFalse( $this->sut->getFilled() );
+		$this->assertFalse( $this->sut->isFilled() );
+	}
+	
+	public function testFillClear()
+	{
+		$this->sut->fill();
+		$this->assertTrue( $this->sut->isFilled() );
 		
-		$this->sut->setFilled( true );
-		$this->assertTrue( $this->sut->getFilled() );
+		$this->sut->clear();
+		$this->assertFalse( $this->sut->isFilled() );
 	}
 	
 	public function testNoNeighboursAddedReturnsNull()

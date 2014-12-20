@@ -11,10 +11,10 @@ class LayerDownDot
 	
 	public function __construct()
 	{
-		$this->setFilled( true );
+		$this->clear();
 	}
 	
-	public function getFilled()
+	public function isFilled()
 	{
 		return $this->filled;
 	}
@@ -22,6 +22,16 @@ class LayerDownDot
 	public function setFilled( $filled )
 	{
 		$this->filled = $filled;
+	}
+	
+	public function fill()
+	{
+		$this->setFilled( true );
+	}
+	
+	public function clear()
+	{
+		$this->setFilled( false );
 	}
 	
 	public function getLeftNeighbour()

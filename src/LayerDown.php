@@ -5,7 +5,14 @@ class LayerDown
 {
 	private $width;
 	private $height;
-	private $dots;
+	private $dots =
+		[
+			[ false, false, false, false ],
+			[ false, false, false, false ],
+			[ false, false, false, false ],
+			[ false, false, false, false ]
+		];
+		
 	private $vertices;
 	
 	public function __construct( $width = 4, $height = 4, $renderSample = true )
@@ -26,13 +33,23 @@ class LayerDown
 			throw new \RuntimeException( 'Can\'t render on a non 4x4 layer.' );
 		}
 		
-		$this->dots =
+		$this->getDot( 0, 0 )->fill();
+		$this->getDot( 2, 0 )->fill();
+		$this->getDot( 3, 0 )->fill();
+		$this->getDot( 1, 1 )->fill();
+		$this->getDot( 2, 2 )->fill();
+		$this->getDot( 3, 2 )->fill();
+		$this->getDot( 1, 3 )->fill();
+		$this->getDot( 2, 3 )->fill();
+		$this->getDot( 3, 3 )->fill();
+		
+		/*$this->dots =
 		[
 			[ true,  false, true,  true  ],
 			[ false, true,  false, false ],
 			[ false, false, true,  true  ],
 			[ false, true,  true,  true  ]
-		];
+		];*/
 		
 		$this->vertices =
 		[
@@ -64,14 +81,15 @@ class LayerDown
 		return $this->height + 1;
 	}
 	
-	public function setDot( $state, $x, $y )
-	{
-		$this->dots[ $y ][ $x ] = $state;
-	}
-	
 	public function getDot( $x, $y )
 	{
-		return $this->dots[ $y ][ $x ];
+		if( ! is_object( $this->dots[ $y ][ $x ] ) )
+		{
+			$this->dots[ $y ][ $x ] = new LayerDownDot;
+		}
+		
+		$result = $this->dots[ $y ][ $x ];
+		return $result;
 	}
 	
 	public function setVertex( $state, $x, $y )
