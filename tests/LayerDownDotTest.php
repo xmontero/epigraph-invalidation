@@ -114,4 +114,95 @@ class LayerDownDotTest extends PHPUnit_Framework_TestCase
 		$this->assertSame( $dotBottomLeft, $this->sut->getBottomLeftNeighbour() );
 		$this->assertSame( $dotBottomRight, $this->sut->getBottomRightNeighbour() );
 	}
+	
+	/**
+	 * @dataProvider providerIncoherentDiagonalNeighboursThrowException
+	 */
+	public function testIncoherentDiagonalNeighboursThrowException( $corner )
+	{
+		//   +---+---+---+
+		//   |TLT|   |TRT|
+		//   +---+   +---+
+		// +---+ |   | +---+
+		// |TLL| | T | |TRR|
+		// +---+-+---+-----+
+		// |   L |sut| R   |
+		// +---+-+---+-+---+
+		// |BLL| | B | |BRR|
+		// +---+ |   | +---+
+		//   +---+   +---+
+		//   |BLB|   |BRB|
+		//   +---+   +---+
+		
+		$dotLeft = new LayerDownDot;
+		$dotRight = new LayerDownDot;
+		$dotTop = new LayerDownDot;
+		$dotBottom = new LayerDownDot;
+		
+		$dotTopLeftTop = new LayerDownDot;
+		$dotTopLeftLeft = new LayerDownDot;
+		$dotTopRightTop = new LayerDownDot;
+		$dotTopRightRight = new LayerDownDot;
+		$dotBottomLeftBottom = new LayerDownDot;
+		$dotBottomLeftLeft = new LayerDownDot;
+		$dotBottomRightBottom = new LayerDownDot;
+		$dotBottomRightRight = new LayerDownDot;
+		
+		$dotLeft->setTopNeighbour( $dotTopLeftLeft );
+		$dotLeft->setBottomNeighbour( $dotBottomLeftLeft );
+		$dotRight->setTopNeighbour( $dotTopRightRight );
+		$dotRight->setBottomNeighbour( $dotBottomRightRight );
+		$dotTop->setLeftNeighbour( $dotTopLeftTop );
+		$dotTop->setRightNeighbour( $dotTopRightTop );
+		$dotBottom->setLeftNeighbour( $dotBottomLeftBottom );
+		$dotBottom->setRightNeighbour( $dotBottomRightBottom );
+		
+		$this->sut->setLeftNeighbour( $dotLeft );
+		$this->sut->setRightNeighbour( $dotRight );
+		$this->sut->setTopNeighbour( $dotTop );
+		$this->sut->setBottomNeighbour( $dotBottom );
+		
+		$this->assertSame( $dotLeft, $this->sut->getLeftNeighbour() );
+		$this->assertSame( $dotRight, $this->sut->getRightNeighbour() );
+		$this->assertSame( $dotTop, $this->sut->getTopNeighbour() );
+		$this->assertSame( $dotBottom, $this->sut->getBottomNeighbour() );
+		
+		$this->setExpectedException( 'RuntimeException' );
+		
+		switch( $corner )
+		{
+			case 'topLeft':
+				
+				$dummy = $this->sut->getTopLeftNeighbour();
+				break;
+				
+			case 'topRight':
+				
+				$dummy = $this->sut->getTopRightNeighbour();
+				break;
+				
+			case 'bottomLeft':
+				
+				$dummy = $this->sut->getBottomLeftNeighbour();
+				break;
+				
+			case 'bottomRight':
+				
+				$dummy = $this->sut->getBottomRightNeighbour();
+				break;
+		}
+	}
+	
+	public function providerIncoherentDiagonalNeighboursThrowException()
+	{
+		$data = array
+		(
+			array( 'topLeft' ),
+			array( 'topRight' ),
+			array( 'bottomLeft' ),
+			array( 'bottomRight' ),
+		);
+		
+		return $data;
+	}
 }

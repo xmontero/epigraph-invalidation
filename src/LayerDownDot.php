@@ -165,7 +165,7 @@ class LayerDownDot
 	{
 		if( $dot1 !== $dot2 )
 		{
-			throw new \Exception( 'Not same LayerDownDots as diagonal neighbours.' );
+			throw new \RuntimeException( 'Not same LayerDownDots as diagonal neighbours.' );
 		}
 		
 		return $dot1;
