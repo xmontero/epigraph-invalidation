@@ -5,24 +5,28 @@ class LayerDown
 {
 	private $width;
 	private $height;
-	private $dots =
-		[
-			[ false, false, false, false ],
-			[ false, false, false, false ],
-			[ false, false, false, false ],
-			[ false, false, false, false ]
-		];
+	private $dots;
 		
 	private $vertices;
 	
-	public function __construct( $width = 4, $height = 4, $renderSample = true )
+	public function __construct( $width = 4, $height = 4 )
+	{
+		$this->setSize( $width, $height );
+	}
+	
+	public function setSize( $width, $height )
 	{
 		$this->width = $width;
 		$this->height = $height;
 		
-		if( $renderSample )
+		$this->dots = array();
+		for( $y = 0; $y < $height; $y++ )
 		{
-			$this->renderSample();
+			$this->dots[ $y ] = array();
+			for( $x = 0; $x < $width; $x++ )
+			{
+				$this->dots[ $y ][ $x ] = new LayerDownDot;
+			}
 		}
 	}
 	
@@ -42,14 +46,6 @@ class LayerDown
 		$this->getDot( 1, 3 )->fill();
 		$this->getDot( 2, 3 )->fill();
 		$this->getDot( 3, 3 )->fill();
-		
-		/*$this->dots =
-		[
-			[ true,  false, true,  true  ],
-			[ false, true,  false, false ],
-			[ false, false, true,  true  ],
-			[ false, true,  true,  true  ]
-		];*/
 		
 		$this->vertices =
 		[
@@ -86,11 +82,6 @@ class LayerDown
 		if( $x < 0 || $x >= $this->getDotWidth() || $y < 0 || $y >= $this->getDotHeight() )
 		{
 			throw new \OutOfBoundsException;
-		}
-		
-		if( ! is_object( $this->dots[ $y ][ $x ] ) )
-		{
-			$this->dots[ $y ][ $x ] = new LayerDownDot;
 		}
 		
 		$result = $this->dots[ $y ][ $x ];

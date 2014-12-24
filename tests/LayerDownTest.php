@@ -21,7 +21,7 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 		$width = 4;
 		$height = 5;
 		
-		$sut = new LayerDown( $width, $height, false );
+		$sut = new LayerDown( $width, $height );
 		$this->assertEquals( $width, $sut->getDotWidth() );
 		$this->assertEquals( $height, $sut->getDotHeight() );
 		$this->assertEquals( $width + 1, $sut->getVertexWidth() );
@@ -51,7 +51,7 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testGetDotOutOfBoundsThrowsException( $width, $height, $x, $y )
 	{
-		$sut = new LayerDown( $width, $height, false );
+		$sut = new LayerDown( $width, $height );
 		
 		$this->setExpectedException( 'OutOfBoundsException' );
 		$sut->getDot( $x, $y );
@@ -73,4 +73,33 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 		
 		return $data;
 	}
+	
+	public function testDotsAreNeighbours()
+	{
+		$x = 1;
+		$y = 2;
+		
+		$topLeftNeighbour     = $this->sut->getDot( $x - 1, $y - 1 );
+		$topNeighbour         = $this->sut->getDot( $x,     $y - 1 );
+		$topRightNeighbour    = $this->sut->getDot( $x + 1, $y - 1 );
+		
+		$leftNeighbour        = $this->sut->getDot( $x - 1, $y );
+		$dot                  = $this->sut->getDot( $x,     $y );
+		$rightNeighbour       = $this->sut->getDot( $x + 1, $y );
+		
+		$bottomLeftNeighbour  = $this->sut->getDot( $x - 1, $y + 1 );
+		$bottomNeighbour      = $this->sut->getDot( $x,     $y + 1 );
+		$bottomRightNeighbour = $this->sut->getDot( $x + 1, $y + 1 );
+		
+		//$this->assertSame( $topLeftNeighbour,     $dot->getTopLeftNeighbour()     );
+/*		$this->assertSame( $topNeighbour,         $dot->getTopNeighbour()         );
+		$this->assertSame( $topRightNeighbour,    $dot->getTopRightNeighbour()    );
+		
+		$this->assertSame( $leftNeighbour,        $dot->getLeftNeighbour()        );
+		$this->assertSame( $rightNeighbour,       $dot->getRightNeighbour()       );
+		
+		$this->assertSame( $bottomLeftNeighbour,  $dot->getBottomLeftNeighbour()  );
+		$this->assertSame( $bottomNeighbour,      $dot->getBottomNeighbour()      );
+		$this->assertSame( $bottomRightNeighbour, $dot->getBottomRightNeighbour() );
+*/	}
 }

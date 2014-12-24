@@ -1,11 +1,14 @@
 <?php
+
+use Xmontero\EpigraphInvalidation\Icon;
+
 class IconTest extends PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new Xmontero\EpigraphInvalidation\Icon;
+		$this->sut = new Icon;
 	}
 	
 	public function testSize()
@@ -17,11 +20,25 @@ class IconTest extends PHPUnit_Framework_TestCase
 		$sut = $this->sut;
 		$this->assertEquals( $defaultSize, $sut->getSize() );
 		
-		$sut = new Xmontero\EpigraphInvalidation\Icon( $customConstructorSize );
+		$sut = new Icon( $customConstructorSize );
 		$this->assertEquals( $customConstructorSize, $sut->getSize() );
 		
 		$sut->setSize( $customSetterSize );
 		$this->assertEquals( $customSetterSize, $sut->getSize() );
+	}
+	
+	public function testLayerDown()
+	{
+		$size = 13;
+		
+		$this->sut->setSize( $size );
+		$layerDown = $this->sut->getLayerDown();
+		
+		$this->assertInstanceOf( 'Xmontero\EpigraphInvalidation\LayerDown', $layerDown );
+		$this->assertEquals( $size, $layerDown->getDotWidth() );
+		$this->assertEquals( $size, $layerDown->getDotHeight() );
+		$this->assertEquals( $size + 1, $layerDown->getVertexWidth() );
+		$this->assertEquals( $size + 1, $layerDown->getVertexHeight() );
 	}
 	
 	public function tearDown()

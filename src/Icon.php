@@ -4,6 +4,7 @@ namespace Xmontero\EpigraphInvalidation;
 class Icon
 {
 	private $size;
+	private $layerDown;
 	
 	public function __construct( $size = 4 )
 	{
@@ -18,11 +19,12 @@ class Icon
 	public function setSize( $size )
 	{
 		$this->size = $size;
+		$this->layerDown = new LayerDown( $size, $size );
 	}
 	
 	public function getLayerDown()
 	{
-		return new LayerDown;
+		return $this->layerDown;
 	}
 	
 	public function getLayerUpDot( $x, $y )

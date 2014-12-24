@@ -73,6 +73,7 @@ class IconGenerator
 		//imagefilledellipse( $image, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $red );
 		
 		$layerDown = $icon->getLayerDown();
+		$layerDown->renderSample();
 		for( $row = 0; $row < $this->dotCount; $row++ )
 		{
 			for( $column = 0; $column < $this->dotCount; $column++ )
@@ -86,7 +87,7 @@ class IconGenerator
 				$bottomLeft = $dot->getBottomLeftVertex();
 				$bottomRight = $dot->getBottomRightVertex();
 				
-				$this->paintLayerDownDot( $dot, $topLeft, $topRight, $bottomLeft, $bottomRight, $image, $offsetX, $offsetY );
+				$this->paintLayerDownDot( $dot->isFilled(), $topLeft, $topRight, $bottomLeft, $bottomRight, $image, $offsetX, $offsetY );
 			}
 		}
 		
