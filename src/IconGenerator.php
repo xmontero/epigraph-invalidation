@@ -81,10 +81,10 @@ class IconGenerator
 				$offsetY = $row * $this->dotWidthInPixels + $this->marginWidthInPixels;
 				
 				$dot = $layerDown->getDot( $column, $row );
-				$topLeft = $layerDown->getTopLeftVertexForDot( $column, $row );
-				$topRight = $layerDown->getTopRightVertexForDot( $column, $row );
-				$bottomLeft = $layerDown->getBottomLeftVertexForDot( $column, $row );
-				$bottomRight = $layerDown->getBottomRightVertexForDot( $column, $row );
+				$topLeft = $dot->getTopLeftVertex();
+				$topRight = $dot->getTopRightVertex();
+				$bottomLeft = $dot->getBottomLeftVertex();
+				$bottomRight = $dot->getBottomRightVertex();
 				
 				$this->paintLayerDownDot( $dot, $topLeft, $topRight, $bottomLeft, $bottomRight, $image, $offsetX, $offsetY );
 			}

@@ -106,24 +106,4 @@ class LayerDown
 	{
 		return $this->vertices[ $y ][ $x ];
 	}
-	
-	public function getTopLeftVertexForDot( $x, $y )
-	{
-		return $this->getVertex( $x, $y );
-	}
-	
-	public function getTopRightVertexForDot( $x, $y )
-	{
-		return $this->getVertex( $x + 1, $y );
-	}
-	
-	public function getBottomLeftVertexForDot( $x, $y )
-	{
-		return $this->getVertex( $x, $y + 1 );
-	}
-	
-	public function getBottomRightVertexForDot( $x, $y )
-	{
-		return $this->getVertex( $x + 1, $y + 1 );
-	}
 }
