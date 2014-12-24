@@ -91,8 +91,8 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 		$bottomNeighbour      = $this->sut->getDot( $x,     $y + 1 );
 		$bottomRightNeighbour = $this->sut->getDot( $x + 1, $y + 1 );
 		
-		//$this->assertSame( $topLeftNeighbour,     $dot->getTopLeftNeighbour()     );
-/*		$this->assertSame( $topNeighbour,         $dot->getTopNeighbour()         );
+		$this->assertSame( $topLeftNeighbour,     $dot->getTopLeftNeighbour()     );
+		$this->assertSame( $topNeighbour,         $dot->getTopNeighbour()         );
 		$this->assertSame( $topRightNeighbour,    $dot->getTopRightNeighbour()    );
 		
 		$this->assertSame( $leftNeighbour,        $dot->getLeftNeighbour()        );
@@ -101,5 +101,53 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 		$this->assertSame( $bottomLeftNeighbour,  $dot->getBottomLeftNeighbour()  );
 		$this->assertSame( $bottomNeighbour,      $dot->getBottomNeighbour()      );
 		$this->assertSame( $bottomRightNeighbour, $dot->getBottomRightNeighbour() );
-*/	}
+	}
+	
+	/**
+	 * @dataProvider providerUnderlyingVertexes
+	 */
+	public function testUnderlyingVertexes( $vertexX, $vertexY, $state)
+	{
+		$this->markTestIncomplete( "Missing to test all four dots around the vertex, only testing bottom-right dot around vertex currently." );
+		
+		$this->sut->setVertex( true, $vertexX, $vertexY );
+		$dot = $this->sut->getDotOrNull( $vertexX, $vertexY );
+		
+		if( ! is_null( $dot ) )
+		{
+			$this->assertFalse( $dot->getTopLeftVertex() );
+		}
+		
+		$top  = $this->sut->getDotOrNull( $vertexX - 1, $vertexY );
+		$left = $this->sut->getDotOrNull( $vertexX, $vertexY - 1 );
+		
+		is_null( $top )  ? null : $top->fill();
+		is_null( $left ) ? null : $left->fill();
+		
+		if( ! is_null( $dot ) )
+		{
+			$this->assertEquals( $state, $dot->getTopLeftVertex() );
+		}
+	}
+	
+	public function providerUnderlyingVertexes()
+	{
+		$data = array
+		(
+			array( 0, 0, false ),
+			array( 1, 0, false ),
+			array( 4, 0, false ),
+			array( 0, 2, false ),
+			array( 1, 2, true ),
+			array( 3, 2, true ),
+			array( 2, 3, true ),
+			array( 3, 3, true ),
+			array( 4, 2, false ),
+			array( 0, 4, false ),
+			array( 1, 4, false ),
+			array( 4, 4, false ),
+		);
+		
+		return $data;
+	}
 }

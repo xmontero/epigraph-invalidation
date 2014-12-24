@@ -25,7 +25,20 @@ class LayerDown
 			$this->dots[ $y ] = array();
 			for( $x = 0; $x < $width; $x++ )
 			{
-				$this->dots[ $y ][ $x ] = new LayerDownDot;
+				$currentDot = new LayerDownDot;
+				$this->dots[ $y ][ $x ] = $currentDot;
+				
+				if( $x >= 1 )
+				{
+					$left = $this->dots[ $y ][ $x - 1 ];
+					$currentDot->setLeftNeighbour( $left );
+				}
+				
+				if( $y >= 1 )
+				{
+					$top = $this->dots[ $y - 1 ][ $x ];
+					$currentDot->setTopNeighbour( $top );
+				}
 			}
 		}
 	}
@@ -47,14 +60,7 @@ class LayerDown
 		$this->getDot( 2, 3 )->fill();
 		$this->getDot( 3, 3 )->fill();
 		
-		$this->vertices =
-		[
-			[ false, false, false, true, false ],
-			[ false, false, true,  true, false ],
-			[ false, false, false, true, false ],
-			[ false, false, true,  true, true  ],
-			[ false, false, true,  true, false ],
-		];
+		$this->setVertex( true, 2, 1 );
 	}
 	
 	public function getDotWidth()
@@ -90,11 +96,38 @@ class LayerDown
 	
 	public function setVertex( $state, $x, $y )
 	{
-		$this->vertices[ $y ][ $x ] = $state;
+		$topLeft     = $this->getDotOrNull( $x - 1, $y - 1 );
+		$topRight    = $this->getDotOrNull( $x,     $y - 1 );
+		$bottomLeft  = $this->getDotOrNull( $x - 1, $y     );
+		$bottomRight = $this->getDotOrNull( $x,     $y     );
+		
+		is_null( $topLeft )     ? null : $topLeft->setBottomRightUnderlyingVertex( $state );
+		is_null( $topRight )    ? null : $topRight->setBottomLeftUnderlyingVertex( $state );
+		is_null( $bottomLeft )  ? null : $bottomLeft->setTopRightUnderlyingVertex( $state );
+		is_null( $bottomRight ) ? null : $bottomRight->setTopLeftUnderlyingVertex( $state );
 	}
 	
 	public function getVertex( $x, $y )
 	{
 		return $this->vertices[ $y ][ $x ];
 	}
+	
+	//---------------------------------------------------------------------//
+	// Private.                                                            //
+	//---------------------------------------------------------------------//
+	
+	public function getDotOrNull( $x, $y )
+	{
+		try
+		{
+			$result = $this->getDot( $x, $y );
+		}
+		catch( \OutOfBoundsException $e )
+		{
+			$result = null;
+		}
+		
+		return $result;
+	}
+	
 }
