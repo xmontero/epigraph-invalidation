@@ -106,46 +106,83 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider providerUnderlyingVertexes
 	 */
-	public function testUnderlyingVertexes( $vertexX, $vertexY, $state)
+	public function testUnderlyingVertexes( $vertexX, $vertexY, $instableState, $majorityStateDueToEdge )
 	{
-		$this->markTestIncomplete( "Missing to test all four dots around the vertex, only testing bottom-right dot around vertex currently." );
-		
 		$this->sut->setVertex( true, $vertexX, $vertexY );
-		$dot = $this->sut->getDotOrNull( $vertexX, $vertexY );
 		
-		if( ! is_null( $dot ) )
-		{
-			$this->assertFalse( $dot->getTopLeftVertex() );
-		}
+		$topLeft = $this->sut->getDotOrNull( $vertexX - 1, $vertexY - 1);
+		$topRight = $this->sut->getDotOrNull( $vertexX, $vertexY - 1 );
+		$bottomLeft = $this->sut->getDotOrNull( $vertexX - 1, $vertexY );
+		$bottomRight = $this->sut->getDotOrNull( $vertexX, $vertexY );
 		
-		$top  = $this->sut->getDotOrNull( $vertexX - 1, $vertexY );
-		$left = $this->sut->getDotOrNull( $vertexX, $vertexY - 1 );
+		// - -
+		// - -
 		
-		is_null( $top )  ? null : $top->fill();
-		is_null( $left ) ? null : $left->fill();
+		is_null( $topLeft ) ?: $this->assertFalse( $topLeft->getBottomRightVertex() );
+		is_null( $topRight ) ?: $this->assertFalse( $topRight->getBottomLeftVertex() );
+		is_null( $bottomLeft ) ?: $this->assertFalse( $bottomLeft->getTopRightVertex() );
+		is_null( $bottomRight ) ?: $this->assertFalse( $bottomRight->getTopLeftVertex() );
 		
-		if( ! is_null( $dot ) )
-		{
-			$this->assertEquals( $state, $dot->getTopLeftVertex() );
-		}
+		// - +
+		// + -
+		
+		is_null( $topRight ) ?: $topRight->fill();
+		is_null( $bottomLeft ) ?: $bottomLeft->fill();
+		
+		is_null( $topLeft ) ?: $this->assertEquals( $instableState, $topLeft->getBottomRightVertex() );
+		is_null( $topRight ) ?: $this->assertEquals( $instableState, $topRight->getBottomLeftVertex() );
+		is_null( $bottomLeft ) ?: $this->assertEquals( $instableState, $bottomLeft->getTopRightVertex() );
+		is_null( $bottomRight ) ?: $this->assertEquals( $instableState, $bottomRight->getTopLeftVertex() );
+		
+		// - -
+		// + -
+		
+		is_null( $topRight ) ?: $topRight->clear();
+		
+		is_null( $topLeft ) ?: $this->assertFalse( $topLeft->getBottomRightVertex() );
+		is_null( $topRight ) ?: $this->assertFalse( $topRight->getBottomLeftVertex() );
+		is_null( $bottomLeft ) ?: $this->assertFalse( $bottomLeft->getTopRightVertex() );
+		is_null( $bottomRight ) ?: $this->assertFalse( $bottomRight->getTopLeftVertex() );
+		
+		// + -
+		// - +
+		
+		is_null( $bottomLeft ) ?: $bottomLeft->clear();
+		is_null( $topLeft ) ?: $topLeft->fill();
+		is_null( $bottomRight ) ?: $bottomRight->fill();
+		
+		is_null( $topLeft ) ?: $this->assertEquals( $instableState, $topLeft->getBottomRightVertex() );
+		is_null( $topRight ) ?: $this->assertEquals( $instableState, $topRight->getBottomLeftVertex() );
+		is_null( $bottomLeft ) ?: $this->assertEquals( $instableState, $bottomLeft->getTopRightVertex() );
+		is_null( $bottomRight ) ?: $this->assertEquals( $instableState, $bottomRight->getTopLeftVertex() );
+		
+		// + +
+		// - +
+		
+		is_null( $topRight ) ?: $topRight->fill();
+		
+		is_null( $topLeft ) ?: $this->assertEquals( $majorityStateDueToEdge, $topLeft->getBottomRightVertex() );
+		is_null( $topRight ) ?: $this->assertEquals( $majorityStateDueToEdge, $topRight->getBottomLeftVertex() );
+		is_null( $bottomLeft ) ?: $this->assertEquals( $majorityStateDueToEdge, $bottomLeft->getTopRightVertex() );
+		is_null( $bottomRight ) ?: $this->assertEquals( $majorityStateDueToEdge, $bottomRight->getTopLeftVertex() );
 	}
 	
 	public function providerUnderlyingVertexes()
 	{
 		$data = array
 		(
-			array( 0, 0, false ),
-			array( 1, 0, false ),
-			array( 4, 0, false ),
-			array( 0, 2, false ),
-			array( 1, 2, true ),
-			array( 3, 2, true ),
-			array( 2, 3, true ),
-			array( 3, 3, true ),
-			array( 4, 2, false ),
-			array( 0, 4, false ),
-			array( 1, 4, false ),
-			array( 4, 4, false ),
+			array( 0, 0, false, false ),
+			array( 1, 0, false, false ),
+			array( 4, 0, false, false ),
+			array( 0, 2, false, true  ),
+			array( 1, 2, true,  true  ),
+			array( 3, 2, true,  true  ),
+			array( 2, 3, true,  true  ),
+			array( 3, 3, true,  true  ),
+			array( 4, 2, false, false ),
+			array( 0, 4, false, false ),
+			array( 1, 4, false, true  ),
+			array( 4, 4, false, false ),
 		);
 		
 		return $data;
