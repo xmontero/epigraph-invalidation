@@ -16,8 +16,8 @@ class DefaultController
 		$key = $this->getKey();
 		$size = $this->getSize();
 		
-		$ig = new \Xmontero\EpigraphInvalidation\IconGenerator( $key );
-		$ig->output( $size );
+		$iconGenerator = new \Xmontero\EpigraphInvalidation\IconGenerator( $key, 4 );
+		$iconGenerator->output( $size );
 	}
 	
 	public function getKey()
