@@ -73,7 +73,7 @@ class IconGenerator
 		//imagefilledellipse( $image, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $red );
 		
 		$layerDown = $icon->getLayerDown();
-		$layerDown->renderSample();
+		$this->renderSample( $layerDown );
 		for( $row = 0; $row < $this->dotCount; $row++ )
 		{
 			for( $column = 0; $column < $this->dotCount; $column++ )
@@ -141,5 +141,25 @@ class IconGenerator
 		
 		imagefilledrectangle( $image, $rectangleX, $rectangleY, $rectangleX + $w, $rectangleY + $w, $vertexColor );
 		imagefilledarc( $image, $arcCenterX, $arcCenterY, $w2, $w2, $arcStartAngle, $arcStopAngle, $dotColor, IMG_ARC_PIE );
+	}
+	
+	public function renderSample( $layerDown )
+	{
+		if( ( $layerDown->getDotWidth() != 4 ) || ( $layerDown->getDotHeight() != 4 ) )
+		{
+			throw new \RuntimeException( 'Can\'t render on a non 4x4 layer.' );
+		}
+		
+		$layerDown->getDot( 0, 0 )->fill();
+		$layerDown->getDot( 2, 0 )->fill();
+		$layerDown->getDot( 3, 0 )->fill();
+		$layerDown->getDot( 1, 1 )->fill();
+		$layerDown->getDot( 2, 2 )->fill();
+		$layerDown->getDot( 3, 2 )->fill();
+		$layerDown->getDot( 1, 3 )->fill();
+		$layerDown->getDot( 2, 3 )->fill();
+		$layerDown->getDot( 3, 3 )->fill();
+		
+		$layerDown->setVertex( true, 2, 1 );
 	}
 }

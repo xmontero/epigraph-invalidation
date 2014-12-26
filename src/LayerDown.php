@@ -43,26 +43,6 @@ class LayerDown
 		}
 	}
 	
-	public function renderSample()
-	{
-		if( ( $this->getDotWidth() != 4 ) || ( $this->getDotHeight() != 4 ) )
-		{
-			throw new \RuntimeException( 'Can\'t render on a non 4x4 layer.' );
-		}
-		
-		$this->getDot( 0, 0 )->fill();
-		$this->getDot( 2, 0 )->fill();
-		$this->getDot( 3, 0 )->fill();
-		$this->getDot( 1, 1 )->fill();
-		$this->getDot( 2, 2 )->fill();
-		$this->getDot( 3, 2 )->fill();
-		$this->getDot( 1, 3 )->fill();
-		$this->getDot( 2, 3 )->fill();
-		$this->getDot( 3, 3 )->fill();
-		
-		$this->setVertex( true, 2, 1 );
-	}
-	
 	public function getDotWidth()
 	{
 		return $this->width;
