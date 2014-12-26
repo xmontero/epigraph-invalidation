@@ -65,9 +65,9 @@ class LayerDown
 	
 	public function getDot( $x, $y )
 	{
-		if( $x < 0 || $x >= $this->getDotWidth() || $y < 0 || $y >= $this->getDotHeight() )
+		if( ( $x < 0 ) || ( $x >= $this->getDotWidth() ) || ( $y < 0 ) || ( $y >= $this->getDotHeight() ) )
 		{
-			throw new \OutOfBoundsException;
+			throw new \OutOfBoundsException( 'x: ' . $x . ', y: ' . $y );
 		}
 		
 		$result = $this->dots[ $y ][ $x ];

@@ -72,8 +72,9 @@ class IconGenerator
 		$this->colorLayerDown = imagecolorallocate( $image, 233, 14, 91 );
 		//imagefilledellipse( $image, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $red );
 		
+		$this->renderRandom( $icon );
+		
 		$layerDown = $icon->getLayerDown();
-		$this->renderSample( $layerDown );
 		for( $row = 0; $row < $this->dotCount; $row++ )
 		{
 			for( $column = 0; $column < $this->dotCount; $column++ )
@@ -143,7 +144,7 @@ class IconGenerator
 		imagefilledarc( $image, $arcCenterX, $arcCenterY, $w2, $w2, $arcStartAngle, $arcStopAngle, $dotColor, IMG_ARC_PIE );
 	}
 	
-	public function renderSample( $layerDown )
+	private function renderSample( LayerDown $layerDown )
 	{
 		if( ( $layerDown->getDotWidth() != 4 ) || ( $layerDown->getDotHeight() != 4 ) )
 		{
@@ -161,5 +162,52 @@ class IconGenerator
 		$layerDown->getDot( 3, 3 )->fill();
 		
 		$layerDown->setVertex( true, 2, 1 );
+	}
+	
+	private function renderRandom( Icon $icon )
+	{
+		$this->renderRandomLayerDown( $icon->getLayerDown() );
+	}
+	
+	private function renderRandomLayerDown( LayerDown $layerDown )
+	{
+		$this->renderRandomLayerDownDots( $layerDown );
+		$this->renderRandomLayerDownVertexes( $layerDown );
+	}
+	
+	private function renderRandomLayerDownDots( LayerDown $layerDown )
+	{
+		$dotWidth = $layerDown->getDotWidth();
+		$dotHeight = $layerDown->getDotHeight();
+		
+		for( $y = 0; $y < $dotHeight; $y++ )
+		{
+			for( $x = 0; $x < $dotWidth; $x++ )
+			{
+				$value = $this->getRandomBool( 0.5 );
+				$layerDown->getDot( $x, $y )->setFilled( $value );
+			}
+		}
+	}
+	
+	private function renderRandomLayerDownVertexes( LayerDown $layerDown )
+	{
+		$vertexWidth = $layerDown->getVertexWidth();
+		$vertexHeight = $layerDown->getVertexHeight();
+		
+		for( $y = 0; $y < $vertexHeight; $y++ )
+		{
+			for( $x = 0; $x < $vertexWidth; $x++ )
+			{
+				$value = $this->getRandomBool( 0.5 );
+				$layerDown->setVertex( $value, $x, $y );
+			}
+		}
+	}
+	
+	private function getRandomBool()
+	{
+		$value = ( mt_rand( 0, 1 ) == 1 );
+		return $value;
 	}
 }
