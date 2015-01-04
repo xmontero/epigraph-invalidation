@@ -70,6 +70,7 @@ class IconGenerator
 		$layerDown = $this->icon->getLayerDown();
 		$this->renderRandomLayerDownDots( $layerDown );
 		$this->renderRandomLayerDownVertexes( $layerDown );
+		$this->renderRandomLayerUpDots( $layerDown );
 	}
 	
 	private function renderRandomLayerDownDots()
@@ -99,6 +100,22 @@ class IconGenerator
 			{
 				$value = $this->getRandomBool( 0.5 );
 				$layerDown->setVertex( $value, $x, $y );
+			}
+		}
+	}
+	
+	private function renderRandomLayerUpDots()
+	{
+		$layerUp = $this->icon->getLayerUp();
+		$dotWidth = $layerUp->getDotWidth();
+		$dotHeight = $layerUp->getDotHeight();
+		
+		for( $y = 0; $y < $dotHeight; $y++ )
+		{
+			for( $x = 0; $x < $dotWidth; $x++ )
+			{
+				$value = $this->getRandomBool( 0.5 );
+				$layerUp->getDot( $x, $y )->setFilled( $value );
 			}
 		}
 	}

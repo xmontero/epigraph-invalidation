@@ -19,6 +19,7 @@ class IconPainter
 	private $originalImage;
 	
 	private $colorBackground;
+	private $colorTransparent;
 	private $colorLayerDown;
 	private $colorLayerUp;
 	
@@ -73,6 +74,7 @@ class IconPainter
 		$this->originalImage = imagecreatetruecolor( $this->originalSquareSizeInPixels, $this->originalSquareSizeInPixels );
 		
 		$this->colorBackground = imagecolorallocate( $this->originalImage, 255, 255, 255 );
+		$this->colorTransparent = imagecolorallocatealpha( $this->originalImage, 0, 0, 255, 127 );
 		$this->colorLayerDown = imagecolorallocate( $this->originalImage, 233, 14, 91 );
 		$this->colorLayerUp = imagecolorallocate( $this->originalImage, 253, 200, 0 );
 		
@@ -99,23 +101,42 @@ class IconPainter
 				$offsetY = $row * $this->dotWidthInPixels + $this->marginWidthInPixels;
 				
 				$dot = $layerDown->getDot( $column, $row );
-				$topLeft = $dot->getTopLeftVertex();
-				$topRight = $dot->getTopRightVertex();
-				$bottomLeft = $dot->getBottomLeftVertex();
-				$bottomRight = $dot->getBottomRightVertex();
-				
-				$this->paintLayerDownDot( $dot->isFilled(), $topLeft, $topRight, $bottomLeft, $bottomRight, $this->originalImage, $offsetX, $offsetY );
+				$this->paintLayerDownDot( $dot, $this->originalImage, $offsetX, $offsetY );
 			}
 		}
 	}
 	
 	private function paintIconLayerUpOnImage()
 	{
-		//imagefilledellipse( $this->originalImage, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels / 2, $this->originalSquareSizeInPixels * 2 / 3, $this->originalSquareSizeInPixels * 2 / 3, $this->colorLayerUp );
+		$iconSize = $this->icon->getSize();
+		$layerUp = $this->icon->getLayerUp();
+		
+		for( $row = 0; $row < $iconSize; $row++ )
+		{
+			for( $column = 0; $column < $iconSize; $column++ )
+			{
+				$offsetX = $column * $this->dotWidthInPixels + $this->marginWidthInPixels;
+				$offsetY = $row * $this->dotWidthInPixels + $this->marginWidthInPixels;
+				
+				$dot = $layerUp->getDot( $column, $row );
+				$this->paintLayerUpDot( $dot, $this->originalImage, $offsetX, $offsetY );
+			}
+		}
 	}
 	
-	private function paintLayerDownDot( $dot, $topLeft, $topRight, $bottomLeft, $bottomRight, $image, $offsetX, $offsetY )
+	//---------------------------------------------------------------------//
+	// Layer down dot.                                                     //
+	//---------------------------------------------------------------------//
+	
+	private function paintLayerDownDot( LayerDownDot $dot, $image, $offsetX, $offsetY )
 	{
+		$dotIsFilled = $dot->isFilled();
+		
+		$topLeft = $dot->getTopLeftVertex();
+		$topRight = $dot->getTopRightVertex();
+		$bottomLeft = $dot->getBottomLeftVertex();
+		$bottomRight = $dot->getBottomRightVertex();
+		
 		$w = $this->columnWidthInPixels;
 		
 		$x1 = $offsetX;
@@ -123,13 +144,13 @@ class IconPainter
 		$x2 = $x1 + $w * 3;
 		$y2 = $y1 + $w * 3;
 		
-		$color = $dot ? $this->colorLayerDown : $this->colorBackground;
+		$color = $dotIsFilled ? $this->colorLayerDown : $this->colorBackground;
 		imagefilledrectangle( $this->originalImage, $x1, $y1, $x2, $y2, $color );
 		
-		$this->paintLayerDownVertex( $topLeft, $dot, $offsetX, $offsetY, true, true, $image );
-		$this->paintLayerDownVertex( $topRight, $dot, $offsetX, $offsetY, true, false, $image );
-		$this->paintLayerDownVertex( $bottomLeft, $dot, $offsetX, $offsetY, false, true, $image );
-		$this->paintLayerDownVertex( $bottomRight, $dot, $offsetX, $offsetY, false, false, $image );
+		$this->paintLayerDownVertex( $topLeft, $dotIsFilled, $offsetX, $offsetY, true, true, $image );
+		$this->paintLayerDownVertex( $topRight, $dotIsFilled, $offsetX, $offsetY, true, false, $image );
+		$this->paintLayerDownVertex( $bottomLeft, $dotIsFilled, $offsetX, $offsetY, false, true, $image );
+		$this->paintLayerDownVertex( $bottomRight, $dotIsFilled, $offsetX, $offsetY, false, false, $image );
 	}
 	
 	private function paintLayerDownVertex( $vertex, $dot, $offsetX, $offsetY, $top, $left, $image )
@@ -161,6 +182,25 @@ class IconPainter
 		
 		imagefilledrectangle( $this->originalImage, $rectangleX, $rectangleY, $rectangleX + $w, $rectangleY + $w, $vertexColor );
 		imagefilledarc( $this->originalImage, $arcCenterX, $arcCenterY, $w2, $w2, $arcStartAngle, $arcStopAngle, $dotColor, IMG_ARC_PIE );
+	}
+	
+	//---------------------------------------------------------------------//
+	// Layer up dot.                                                       //
+	//---------------------------------------------------------------------//
+	
+	private function paintLayerUpDot( LayerUpDot $dot, $image, $offsetX, $offsetY )
+	{
+		$dotIsFilled = $dot->isFilled();
+		
+		$w = $this->columnWidthInPixels;
+		$internalDotOffset = $w * 3 / 2;
+		
+		$centerX = $offsetX + $internalDotOffset;
+		$centerY = $offsetY + $internalDotOffset;
+		$radius = $w * 2;
+		
+		$color = $dotIsFilled ? $this->colorLayerUp : $this->colorTransparent;
+		imagefilledellipse( $this->originalImage, $centerX, $centerY, $radius, $radius, $color );
 	}
 	
 	//---------------------------------------------------------------------//

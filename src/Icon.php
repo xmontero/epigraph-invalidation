@@ -5,6 +5,7 @@ class Icon
 {
 	private $size;
 	private $layerDown;
+	private $layerUp;
 	
 	public function __construct( $size = 4 )
 	{
@@ -20,6 +21,7 @@ class Icon
 	{
 		$this->size = $size;
 		$this->layerDown = new LayerDown( $size, $size );
+		$this->layerUp = new LayerUp( $size, $size );
 	}
 	
 	public function getLayerDown()
@@ -27,8 +29,8 @@ class Icon
 		return $this->layerDown;
 	}
 	
-	public function getLayerUpDot( $x, $y )
+	public function getLayerUp()
 	{
-		//
+		return $this->layerUp;
 	}
 }

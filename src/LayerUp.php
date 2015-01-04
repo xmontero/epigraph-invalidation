@@ -25,7 +25,7 @@ class LayerUp
 			$this->dots[ $y ] = array();
 			for( $x = 0; $x < $width; $x++ )
 			{
-				$currentDot = new LayerDownDot;
+				$currentDot = new LayerUpDot;
 				$this->dots[ $y ][ $x ] = $currentDot;
 				
 				if( $x >= 1 )
