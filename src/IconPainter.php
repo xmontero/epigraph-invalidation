@@ -23,7 +23,7 @@ class IconPainter
 	private $colorLayerDown;
 	private $colorLayerUp;
 	
-	public function __construct( Icon $icon )
+	public function __construct( Icon $icon, LayerBackgroundPainter $layerBackgroundPainter, LayerDownPainter $layerDownPainter, LayerUpPainter $layerUpPainter )
 	{
 		$this->icon = $icon;
 		

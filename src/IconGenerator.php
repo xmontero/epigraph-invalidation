@@ -19,7 +19,11 @@ class IconGenerator
 		//$this->renderSample();
 		$this->renderRandom();
 		
-		$this->iconPainter = new IconPainter( $this->icon );
+		$layerBackgroundPainter = new LayerBackgroundPainter;
+		$layerDownPainter = new LayerDownPainter;
+		$layerUpPainter = new LayerUpPainter;
+		
+		$this->iconPainter = new IconPainter( $this->icon, $layerBackgroundPainter, $layerDownPainter, $layerUpPainter );
 	}
 	
 	//---------------------------------------------------------------------//
