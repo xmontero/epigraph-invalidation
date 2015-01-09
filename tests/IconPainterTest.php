@@ -31,12 +31,18 @@ class IconPainterTest extends PHPUnit_Framework_TestCase
 	
 	public function testBlankIconPaintsBackground()
 	{
+		$this->markTestIncomplete();
+		
 		$this->sut->resample( 260 );
 		$image = $this->sut->getResampledImage();
 		
 		$this->assertColorAtPixel( $image, 2, 2, 255, 255, 255 );
 		$this->assertColorAtPixel( $image, 40, 40, 255, 255, 255 );
 	}
+	
+	//---------------------------------------------------------------------//
+	// Private.                                                            //
+	//---------------------------------------------------------------------//
 	
 	private function assertColorAtPixel( $image, $x, $y, $expectedR, $expectedG, $expectedB )
 	{
