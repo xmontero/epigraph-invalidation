@@ -1,14 +1,15 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests\Layers;
 
-use Xmontero\EpigraphInvalidation\LayerUp;
+use Xmontero\EpigraphInvalidation\Layers\Up;
 
-class LayerUpTest extends PHPUnit_Framework_TestCase
+class UpTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerUp( 4, 4 );
+		$this->sut = new Up( 4, 4 );
 	}
 	
 	public function tearDown()
@@ -21,7 +22,7 @@ class LayerUpTest extends PHPUnit_Framework_TestCase
 		$width = 4;
 		$height = 5;
 		
-		$sut = new LayerUp( $width, $height );
+		$sut = new Up( $width, $height );
 		$this->assertEquals( $width, $sut->getDotWidth() );
 		$this->assertEquals( $height, $sut->getDotHeight() );
 	}

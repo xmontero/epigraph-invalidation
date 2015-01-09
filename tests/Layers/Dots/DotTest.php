@@ -1,14 +1,15 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests\Layers\Dots;
 
-use Xmontero\EpigraphInvalidation\LayerDot;
+use Xmontero\EpigraphInvalidation\Layers\Dots\Dot;
 
-class LayerDotTest extends PHPUnit_Framework_TestCase
+class DotTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerDot;
+		$this->sut = new Dot;
 	}
 	
 	public function tearDown()
@@ -69,10 +70,10 @@ class LayerDotTest extends PHPUnit_Framework_TestCase
 		//     | B |
 		//     +---+
 		
-		$dotLeft = new LayerDot;
-		$dotRight = new LayerDot;
-		$dotTop = new LayerDot;
-		$dotBottom = new LayerDot;
+		$dotLeft = new Dot;
+		$dotRight = new Dot;
+		$dotTop = new Dot;
+		$dotBottom = new Dot;
 		
 		$this->sut->setLeftNeighbour( $dotLeft );
 		$this->sut->setRightNeighbour( $dotRight );
@@ -104,15 +105,15 @@ class LayerDotTest extends PHPUnit_Framework_TestCase
 		// |BL | B |BR |
 		// +---+---+---+
 		
-		$dotLeft = new LayerDot;
-		$dotRight = new LayerDot;
-		$dotTop = new LayerDot;
-		$dotBottom = new LayerDot;
+		$dotLeft = new Dot;
+		$dotRight = new Dot;
+		$dotTop = new Dot;
+		$dotBottom = new Dot;
 		
-		$dotTopLeft = new LayerDot;
-		$dotTopRight = new LayerDot;
-		$dotBottomLeft = new LayerDot;
-		$dotBottomRight = new LayerDot;
+		$dotTopLeft = new Dot;
+		$dotTopRight = new Dot;
+		$dotBottomLeft = new Dot;
+		$dotBottomRight = new Dot;
 		
 		$dotLeft->setTopNeighbour( $dotTopLeft );
 		$dotLeft->setBottomNeighbour( $dotBottomLeft );
@@ -147,8 +148,8 @@ class LayerDotTest extends PHPUnit_Framework_TestCase
 		//     |sut|
 		//     +---+
 		
-		$dotTop = new LayerDot;
-		$dotTopLeft = new LayerDot;
+		$dotTop = new Dot;
+		$dotTopLeft = new Dot;
 		
 		$this->sut->setTopNeighbour( $dotTop );
 		
@@ -178,19 +179,19 @@ class LayerDotTest extends PHPUnit_Framework_TestCase
 		//   |BLB|   |BRB|
 		//   +---+   +---+
 		
-		$dotLeft = new LayerDot;
-		$dotRight = new LayerDot;
-		$dotTop = new LayerDot;
-		$dotBottom = new LayerDot;
+		$dotLeft = new Dot;
+		$dotRight = new Dot;
+		$dotTop = new Dot;
+		$dotBottom = new Dot;
 		
-		$dotTopLeftTop = new LayerDot;
-		$dotTopLeftLeft = new LayerDot;
-		$dotTopRightTop = new LayerDot;
-		$dotTopRightRight = new LayerDot;
-		$dotBottomLeftBottom = new LayerDot;
-		$dotBottomLeftLeft = new LayerDot;
-		$dotBottomRightBottom = new LayerDot;
-		$dotBottomRightRight = new LayerDot;
+		$dotTopLeftTop = new Dot;
+		$dotTopLeftLeft = new Dot;
+		$dotTopRightTop = new Dot;
+		$dotTopRightRight = new Dot;
+		$dotBottomLeftBottom = new Dot;
+		$dotBottomLeftLeft = new Dot;
+		$dotBottomRightBottom = new Dot;
+		$dotBottomRightRight = new Dot;
 		
 		$dotLeft->setTopNeighbour( $dotTopLeftLeft );
 		$dotLeft->setBottomNeighbour( $dotBottomLeftLeft );
@@ -264,10 +265,10 @@ class LayerDotTest extends PHPUnit_Framework_TestCase
 		//     | B |
 		//     +---+
 		
-		$dotLeft = new LayerDot;
-		$dotRight = new LayerDot;
-		$dotTop = new LayerDot;
-		$dotBottom = new LayerDot;
+		$dotLeft = new Dot;
+		$dotRight = new Dot;
+		$dotTop = new Dot;
+		$dotBottom = new Dot;
 		
 		$this->sut->setLeftNeighbour( $dotLeft );
 		$this->sut->setRightNeighbour( $dotRight );

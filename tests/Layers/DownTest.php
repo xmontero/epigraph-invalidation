@@ -1,14 +1,15 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests\Layers;
 
-use Xmontero\EpigraphInvalidation\LayerDown;
+use Xmontero\EpigraphInvalidation\Layers\Down;
 
-class LayerDownTest extends PHPUnit_Framework_TestCase
+class LayerDownTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerDown( 4, 4 );
+		$this->sut = new Down( 4, 4 );
 	}
 	
 	public function tearDown()
@@ -21,7 +22,7 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 		$width = 4;
 		$height = 5;
 		
-		$sut = new LayerDown( $width, $height );
+		$sut = new Down( $width, $height );
 		$this->assertEquals( $width, $sut->getDotWidth() );
 		$this->assertEquals( $height, $sut->getDotHeight() );
 		$this->assertEquals( $width + 1, $sut->getVertexWidth() );
@@ -43,7 +44,7 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 	public function testGetDotReturnsProperType()
 	{
 		$dot = $this->sut->getDot( 0, 2 );
-		$this->assertInstanceOf( 'Xmontero\EpigraphInvalidation\LayerDownDot', $dot );
+		$this->assertInstanceOf( 'Xmontero\EpigraphInvalidation\Layers\Dots\Down', $dot );
 	}
 	
 	/**
@@ -51,7 +52,7 @@ class LayerDownTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testGetDotOutOfBoundsThrowsException( $width, $height, $x, $y )
 	{
-		$sut = new LayerDown( $width, $height );
+		$sut = new Down( $width, $height );
 		
 		$this->setExpectedException( 'OutOfBoundsException' );
 		$sut->getDot( $x, $y );

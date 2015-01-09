@@ -1,8 +1,9 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests;
 
 use Xmontero\EpigraphInvalidation\Icon;
 
-class IconTest extends PHPUnit_Framework_TestCase
+class IconTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
@@ -34,7 +35,7 @@ class IconTest extends PHPUnit_Framework_TestCase
 		$this->sut->setSize( $size );
 		$layerDown = $this->sut->getLayerDown();
 		
-		$this->assertInstanceOf( 'Xmontero\EpigraphInvalidation\LayerDown', $layerDown );
+		$this->assertInstanceOf( 'Xmontero\EpigraphInvalidation\Layers\Down', $layerDown );
 		$this->assertEquals( $size, $layerDown->getDotWidth() );
 		$this->assertEquals( $size, $layerDown->getDotHeight() );
 		$this->assertEquals( $size + 1, $layerDown->getVertexWidth() );

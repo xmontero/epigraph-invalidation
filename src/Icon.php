@@ -20,8 +20,8 @@ class Icon
 	public function setSize( $size )
 	{
 		$this->size = $size;
-		$this->layerDown = new LayerDown( $size, $size );
-		$this->layerUp = new LayerUp( $size, $size );
+		$this->layerDown = new Layers\Down( $size, $size );
+		$this->layerUp = new Layers\Up( $size, $size );
 	}
 	
 	public function getLayerDown()

@@ -1,14 +1,15 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests\Layers\Painters;
 
-use Xmontero\EpigraphInvalidation\LayerUpPainter;
+use Xmontero\EpigraphInvalidation\Layers\Painters\Up;
 
-class LayerUpPainterTest extends PHPUnit_Framework_TestCase
+class LayerUpPainterTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerUpPainter;
+		$this->sut = new Up;
 	}
 	
 	public function tearDown()

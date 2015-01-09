@@ -1,7 +1,7 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers\Dots;
 
-class LayerUpDot extends LayerDot
+class Up extends Dot
 {
 	private $leftBridge = false;
 	private $rightBridge = false;
@@ -12,25 +12,25 @@ class LayerUpDot extends LayerDot
 	// Direct neighbours.                                                  //
 	//---------------------------------------------------------------------//
 	
-	public function setLeftNeighbour( LayerDot $leftNeighbour )
+	public function setLeftNeighbour( Dot $leftNeighbour )
 	{
 		$leftNeighbour->setRightBridge( $this->getLeftBridge() );
 		parent::setLeftNeighbour( $leftNeighbour );
 	}
 	
-	public function setRightNeighbour( LayerDot $rightNeighbour )
+	public function setRightNeighbour( Dot $rightNeighbour )
 	{
 		$rightNeighbour->setLeftBridge( $this->getRightBridge() );
 		parent::setRightNeighbour( $rightNeighbour );
 	}
 	
-	public function setTopNeighbour( LayerDot $topNeighbour )
+	public function setTopNeighbour( Dot $topNeighbour )
 	{
 		$topNeighbour->setBottomBridge( $this->getTopBridge() );
 		parent::setTopNeighbour( $topNeighbour );
 	}
 	
-	public function setBottomNeighbour( LayerDot $bottomNeighbour )
+	public function setBottomNeighbour( Dot $bottomNeighbour )
 	{
 		$bottomNeighbour->setTopBridge( $this->getBottomBridge() );
 		parent::setBottomNeighbour( $bottomNeighbour );

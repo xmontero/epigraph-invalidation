@@ -1,7 +1,7 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers;
 
-class LayerUp
+class Up
 {
 	private $width;
 	private $height;
@@ -25,7 +25,7 @@ class LayerUp
 			$this->dots[ $y ] = array();
 			for( $x = 0; $x < $width; $x++ )
 			{
-				$currentDot = new LayerUpDot;
+				$currentDot = new Dots\Up;
 				$this->dots[ $y ][ $x ] = $currentDot;
 				
 				if( $x >= 1 )

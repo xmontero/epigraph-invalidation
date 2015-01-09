@@ -1,14 +1,15 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests\Layers\Painters;
 
-use Xmontero\EpigraphInvalidation\LayerBackgroundPainter;
+use Xmontero\EpigraphInvalidation\Layers\Painters\Background;
 
-class LayerBackgroundPainterTest extends PHPUnit_Framework_TestCase
+class LayerBackgroundPainterTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerBackgroundPainter;
+		$this->sut = new Background;
 	}
 	
 	public function tearDown()

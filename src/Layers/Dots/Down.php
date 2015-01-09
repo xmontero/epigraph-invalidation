@@ -1,7 +1,7 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers\Dots;
 
-class LayerDownDot extends LayerDot
+class Down extends Dot
 {
 	private $topLeftUnderlyingVertex = false;
 	private $topRightUnderlyingVertex = false;

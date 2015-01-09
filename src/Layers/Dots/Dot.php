@@ -1,7 +1,7 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers\Dots;
 
-class LayerDot
+class Dot
 {
 	private $filled;
 	
@@ -52,7 +52,7 @@ class LayerDot
 		return $this->leftNeighbour;
 	}
 	
-	public function setLeftNeighbour( LayerDot $leftNeighbour)
+	public function setLeftNeighbour( Dot $leftNeighbour)
 	{
 		$this->leftNeighbour = $leftNeighbour;
 		
@@ -68,7 +68,7 @@ class LayerDot
 		return $this->rightNeighbour;
 	}
 	
-	public function setRightNeighbour( LayerDot $rightNeighbour)
+	public function setRightNeighbour( Dot $rightNeighbour)
 	{
 		$this->rightNeighbour = $rightNeighbour;
 		
@@ -84,7 +84,7 @@ class LayerDot
 		return $this->topNeighbour;
 	}
 	
-	public function setTopNeighbour( LayerDot $topNeighbour)
+	public function setTopNeighbour( Dot $topNeighbour)
 	{
 		$this->topNeighbour = $topNeighbour;
 		
@@ -100,7 +100,7 @@ class LayerDot
 		return $this->bottomNeighbour;
 	}
 	
-	public function setBottomNeighbour( LayerDot $bottomNeighbour)
+	public function setBottomNeighbour( Dot $bottomNeighbour)
 	{
 		$this->bottomNeighbour = $bottomNeighbour;
 		
@@ -195,7 +195,7 @@ class LayerDot
 	// Private                                                             //
 	//---------------------------------------------------------------------//
 	
-	private function getCoherentStraightNeighbours( LayerDot $dot1 = null, LayerDot $dot2 = null )
+	private function getCoherentStraightNeighbours( Dot $dot1 = null, Dot $dot2 = null )
 	{
 		if( is_null( $dot1 ) && is_null( $dot2 ) )
 		{
@@ -216,7 +216,7 @@ class LayerDot
 		return $result;
 	}
 	
-	private function getIncoherentStraightNeighbours( LayerDot $dot1 = null, LayerDot $dot2 = null )
+	private function getIncoherentStraightNeighbours( Dot $dot1 = null, Dot $dot2 = null )
 	{
 		try
 		{
@@ -230,7 +230,7 @@ class LayerDot
 		return $result;
 	}
 	
-	private function getSameDiagonalNeighbour( LayerDot $dot1 = null, LayerDot $dot2 = null )
+	private function getSameDiagonalNeighbour( Dot $dot1 = null, Dot $dot2 = null )
 	{
 		if( $dot1 !== $dot2 )
 		{

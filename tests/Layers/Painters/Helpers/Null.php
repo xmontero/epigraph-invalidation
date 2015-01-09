@@ -1,10 +1,10 @@
 <?php
-namespace Xmontero\EpigraphInvalidation\Tests\Helpers;
+namespace Xmontero\EpigraphInvalidation\Tests\Layers\Painters\Helpers;
 
 use Xmontero\EpigraphInvalidation\IconPainter;
-use Xmontero\EpigraphInvalidation\LayerPainter;
+use Xmontero\EpigraphInvalidation\Layers\Painters\Painter;
 
-class LayerNullPainter extends LayerPainter
+class Null extends Painter
 {
 	public function paint( IconPainter $iconPainter )
 	{

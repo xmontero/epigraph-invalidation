@@ -19,9 +19,9 @@ class IconGenerator
 		//$this->renderSample();
 		$this->renderRandom();
 		
-		$layerBackgroundPainter = new LayerBackgroundPainter;
-		$layerDownPainter = new LayerDownPainter;
-		$layerUpPainter = new LayerUpPainter;
+		$layerBackgroundPainter = new Layers\Painters\Background;
+		$layerDownPainter = new Layers\Painters\Down;
+		$layerUpPainter = new Layers\Painters\Up;
 		
 		$this->iconPainter = new IconPainter( $this->icon, $layerBackgroundPainter, $layerDownPainter, $layerUpPainter );
 	}
@@ -93,7 +93,7 @@ class IconGenerator
 		}
 	}
 	
-	private function renderRandomLayerDownVertexes( LayerDown $layerDown )
+	private function renderRandomLayerDownVertexes( Layers\Down $layerDown )
 	{
 		$vertexWidth = $layerDown->getVertexWidth();
 		$vertexHeight = $layerDown->getVertexHeight();

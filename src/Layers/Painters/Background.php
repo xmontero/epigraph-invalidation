@@ -1,7 +1,9 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers\Painters;
 
-class LayerBackgroundPainter extends LayerPainter
+use Xmontero\EpigraphInvalidation\IconPainter;
+
+class Background extends Painter
 {
 	private $colorBackground;
 	

@@ -1,14 +1,14 @@
 <?php
 
-use Xmontero\EpigraphInvalidation\LayerUpDot;
+use Xmontero\EpigraphInvalidation\Layers\Dots\Up;
 
-class LayerUpDotTest extends PHPUnit_Framework_TestCase
+class UpTest extends PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerUpDot;
+		$this->sut = new Up;
 	}
 	
 	public function tearDown()
@@ -50,10 +50,10 @@ class LayerUpDotTest extends PHPUnit_Framework_TestCase
 		
 		$bridgeSetAfterNeighbour = ( ! $bridgeSetBeforeNeighbour );
 		
-		$dotLeft = new LayerUpDot;
-		$dotRight = new LayerUpDot;
-		$dotTop = new LayerUpDot;
-		$dotBottom = new LayerUpDot;
+		$dotLeft = new Up;
+		$dotRight = new Up;
+		$dotTop = new Up;
+		$dotBottom = new Up;
 		
 		if( $bridgeSetBeforeNeighbour )
 		{

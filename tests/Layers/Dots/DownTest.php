@@ -1,14 +1,14 @@
 <?php
 
-use Xmontero\EpigraphInvalidation\LayerDownDot;
+use Xmontero\EpigraphInvalidation\Layers\Dots\Down;
 
-class LayerDownDotTest extends PHPUnit_Framework_TestCase
+class DownTest extends PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	
 	public function setUp()
 	{
-		$this->sut = new LayerDownDot;
+		$this->sut = new Down;
 	}
 	
 	public function tearDown()
@@ -95,8 +95,8 @@ class LayerDownDotTest extends PHPUnit_Framework_TestCase
 		$expectedSut2BottomRightVertex
 	)
 	{
-		$sut1 = new LayerDownDot;
-		$sut2 = new LayerDownDot;
+		$sut1 = new Down;
+		$sut2 = new Down;
 		
 		if( $orientation == 'horizontal' )
 		{
@@ -203,10 +203,10 @@ class LayerDownDotTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testCentralVertexInQuadrupleConfiguration( $sut1Filled, $sut2Filled, $sut3Filled, $sut4Filled, $commonVertex, $sut1Expected, $sut2Expected, $sut3Expected, $sut4Expected )
 	{
-		$sut1 = new LayerDownDot;
-		$sut2 = new LayerDownDot;
-		$sut3 = new LayerDownDot;
-		$sut4 = new LayerDownDot;
+		$sut1 = new Down;
+		$sut2 = new Down;
+		$sut3 = new Down;
+		$sut4 = new Down;
 		
 		$sut1->setRightNeighbour( $sut2 );
 		$sut1->setBottomNeighbour( $sut3 );

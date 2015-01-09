@@ -1,7 +1,9 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers\Painters;
 
-abstract class LayerPainter
+use Xmontero\EpigraphInvalidation\IconPainter;
+
+abstract class Painter
 {
 	protected $colorTransparent;
 	protected $colorSolid;

@@ -1,7 +1,9 @@
 <?php
-namespace Xmontero\EpigraphInvalidation;
+namespace Xmontero\EpigraphInvalidation\Layers\Painters;
 
-class LayerUpPainter extends LayerPainter
+use Xmontero\EpigraphInvalidation\IconPainter;
+
+class Up extends Painter
 {
 	public function paint( IconPainter $iconPainter )
 	{
@@ -30,7 +32,7 @@ class LayerUpPainter extends LayerPainter
 	// Layer up dot.                                                       //
 	//---------------------------------------------------------------------//
 	
-	private function paintLayerUpDot( LayerUpDot $dot, $image, $offsetX, $offsetY )
+	private function paintLayerUpDot( \Xmontero\EpigraphInvalidation\Layers\Dots\Up $dot, $image, $offsetX, $offsetY )
 	{
 		$dotIsFilled = $dot->isFilled();
 		

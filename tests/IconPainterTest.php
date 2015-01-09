@@ -1,8 +1,9 @@
 <?php
+namespace Xmontero\EpigraphInvalidation\Tests;
 
 use Xmontero\EpigraphInvalidation\IconPainter;
 
-class IconPainterTest extends PHPUnit_Framework_TestCase
+class IconPainterTest extends \PHPUnit_Framework_TestCase
 {
 	private $sut = null;
 	private $layerBackgroundPainterMock = null;
@@ -12,9 +13,9 @@ class IconPainterTest extends PHPUnit_Framework_TestCase
 	
 	public function setUp()
 	{
-		$this->layerBackgroundPainterMock = $this->getMock( 'Xmontero\EpigraphInvalidation\LayerBackgroundPainter' );
-		$this->layerDownPainterMock = $this->getMock( 'Xmontero\EpigraphInvalidation\LayerDownPainter' );
-		$this->layerUpPainterMock = $this->getMock( 'Xmontero\EpigraphInvalidation\LayerUpPainter' );
+		$this->layerBackgroundPainterMock = $this->getMock( 'Xmontero\EpigraphInvalidation\Layers\Painters\Background' );
+		$this->layerDownPainterMock = $this->getMock( 'Xmontero\EpigraphInvalidation\Layers\Painters\Down' );
+		$this->layerUpPainterMock = $this->getMock( 'Xmontero\EpigraphInvalidation\Layers\Painters\Up' );
 		$this->iconMock = $this->getMock( 'Xmontero\EpigraphInvalidation\Icon' );
 		
 		$this->sut = new IconPainter( $this->iconMock, $this->layerBackgroundPainterMock, $this->layerDownPainterMock, $this->layerUpPainterMock );

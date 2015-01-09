@@ -25,7 +25,7 @@ class IconPainter
 	private $colorTransparent;
 	private $colorLayerUp;
 	
-	public function __construct( Icon $icon, LayerBackgroundPainter $layerBackgroundPainter, LayerDownPainter $layerDownPainter, LayerUpPainter $layerUpPainter )
+	public function __construct( Icon $icon, Layers\Painters\Background $layerBackgroundPainter, Layers\Painters\Down $layerDownPainter, Layers\Painters\Up $layerUpPainter )
 	{
 		$this->icon = $icon;
 		
